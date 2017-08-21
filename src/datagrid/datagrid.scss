@@ -1,0 +1,66 @@
+.ngv-datagrid {
+    width: 100%;
+    border: 1px solid #dfe2e8;
+    border-radius: 2px;
+    padding: 20px 10px 10px 10px;
+    .op-td{
+        padding:0;
+        line-height: 55px;
+    }
+    .btn-sm{
+        padding: 0.1rem 0.5rem !important;
+    }
+    .dropdown-item{
+        line-height: 32px;  
+    }
+    .ngv-datagrid-toolbar{
+        .search-group{
+            width: 60%;
+            input{
+                width: 100%;
+            }
+        }
+        .toolbar-right{
+            .toolbar-right-btn{
+                width: 100%;
+                text-align: right;
+                button{
+                    margin: 0 0 0 6px;
+                }
+            }
+        }
+        .toolbar-filter{
+            .toolbar-filter-value{
+                .filter-item-label{
+                    padding-right: 5px;
+                }
+            }
+        }
+    }
+    // .ngv-table {
+    //     width: 100%;
+    //     border-collapse: collapse;
+    //     thead {
+    //         font-size: 14px;
+    //         color: #999;
+    //         text-align: left;
+    //         font-weight: normal;
+    //         tr {
+    //             td {
+    //                 border-bottom: 1px solid #ddd;
+    //                 padding: 5px 10px 14px 10px;
+    //             }
+    //         }
+    //     }
+    //     tbody {
+    //         font-size: 14px;
+    //         color: #666;
+    //         tr {
+    //             td {
+    //                 border-bottom: 1px solid #ddd;
+    //                 padding: 10px;
+    //             }
+    //         }
+    //     }
+    // }
+}
