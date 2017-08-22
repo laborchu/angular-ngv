@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 
 import { NgvDataGrid} from './datagrid';
 import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridTableOption,
- NgvDataGridColumnOption, NgvDataGridOpOption, NgvDataGridOpBtnOption
+ NgvDataGridColumnOption, NgvDataGridOpOption, NgvDataGridOpBtnOption,
+ NgvDsDataGridModel, NgvDsDataGridPageModel
 } from './datagrid.config';
 
 export { NgvDataGrid} from './datagrid';
 export {
 	NgvDataGridConfig, NgvDataGridOption, NgvDataGridTableOption,
-	NgvDataGridColumnOption, NgvDataGridOpOption, NgvDataGridOpBtnOption
+	NgvDataGridColumnOption, NgvDataGridOpOption, NgvDataGridOpBtnOption,
+	NgvDsDataGridModel, NgvDsDataGridPageModel
 } from './datagrid.config';
 
 const NGB_TABSET_DIRECTIVES = [NgvDataGrid];

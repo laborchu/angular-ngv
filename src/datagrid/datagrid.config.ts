@@ -1,5 +1,5 @@
 import { Injectable, PipeTransform } from '@angular/core';
-import { NgvDataSource } from '../core/datasource';
+import { NgvDataSource,NgvDsModel } from '../core/datasource';
 
 /**
  * Configuration service for the NgbTabset component.
@@ -10,7 +10,24 @@ import { NgvDataSource } from '../core/datasource';
 export class NgvDataGridConfig {
 }
 
+export interface NgvDsDataGridModel extends NgvDsModel{
+	page: NgvDsDataGridPageModel;
+	data: Array<any>;
+}
+
+export interface NgvDsDataGridPageModel extends NgvDsModel {
+	pageSize?: number; //每页个数
+	pageCount: number; //页面总数
+	pageIndex: number;//当前页数
+
+	numArray?: Array<number>;//显示页数
+	firstDisable?: boolean;//第一页是否可用
+	endDisable?: boolean;//最后一页是否可用
+}
+
 export type styleFunc = (data: any) => string;
+export type pipeFunc = (property: string,data:any) => string;
+export type textFunc = (data:any) => string;
 
 export interface NgvDataGridOption {
 	dataSource: NgvDataSource;
@@ -26,7 +43,7 @@ export interface NgvDataGridTableOption {
 export interface NgvDataGridColumnOption {
 	text: string;
 	property: string;
-	propertyPipe?: PipeTransform;
+	propertyPipe?: PipeTransform | pipeFunc;
 	width?: string;
 	title?:boolean;
 	overflow?: boolean;
@@ -45,7 +62,7 @@ export interface NgvDataGridOpGroupBtnOption {
 }
 
 export interface NgvDataGridOpBtnOption {
-	text: string;
+	text: string | textFunc;
 	style?: string | styleFunc;
 	action: (data: any) => void;
 }

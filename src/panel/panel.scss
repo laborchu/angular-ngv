@@ -1,0 +1,13 @@
+.ngv-panel {
+	.card-header{
+		border-radius: 0 !important;
+	}
+	.card-body{
+		padding: 0;
+	}
+	.panel-crumb{
+		.crumb.action{
+			cursor: pointer;
+		}
+	}
+}

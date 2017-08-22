@@ -3,7 +3,7 @@ import {
   AfterContentChecked,
   Input
 } from '@angular/core';
-import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGridColumnOption } from './datagrid.config';
+import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGridColumnOption, NgvDsDataGridModel, NgvDsDataGridPageModel } from './datagrid.config';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -76,12 +76,13 @@ import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGr
             </td>
             <td *ngIf="option.table.op" class="op-td">
                 <button *ngFor="let btn of option.table.op.buttons" (click)="btn.action(item,dataIndex)"
-                        class="btn btn-sm {{getBtnStyle(btn,item)}}">{{btn.text}}
+                        class="btn btn-sm {{getBtnStyle(btn,item)}}">
+                        {{getBtnText(btn,item)}}
                 </button>
                 <div class="btn-group" *ngFor="let groupButton of option.table.op.groupButtons" dropdown>
                     <button type="button" dropdownToggle
                             class="btn btn-sm dropdown-toggle {{getBtnStyle(groupButton,item)}}">
-                        {{groupButton.text}}
+                        {{getBtnText(groupButton,item)}}
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" *ngFor="let gbtn of groupButton.buttons" (click)="gbtn.action(item,dataIndex)">
@@ -92,7 +93,32 @@ import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGr
             </td>
         </tr>
         </tbody>
-    </table>
+      </table>
+
+      <nav class="pagination-nav">
+        <ul class="pagination pg-blue">
+          <li class="page-item" [ngClass]="{disabled:page?.firstDisable}">
+            <a class="page-link" (click)="goto(num)" 
+              href="javascript:void(0)" mdbRippleRadius>
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="{active:num==page?.pageIndex}" 
+            *ngFor="let num of page?.numArray">
+            <a class="page-link" (click)="goto(num)" 
+            href="javascript:void(0)" mdbRippleRadius>{{num}}</a>
+          </li>
+          <li class="page-item" [ngClass]="{disabled:page?.endDisable}">
+            <a class="page-link" (click)="goto(page.pageCount)" 
+              href="javascript:void(0)" mdbRippleRadius>
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
   `
 })
@@ -101,6 +127,7 @@ export class NgvDataGrid implements  AfterContentChecked {
   }
 
   @Input() option: NgvDataGridOption;
+  page: NgvDsDataGridPageModel;
   data: Array<any> = [];
   searchParams: any = {};
 
@@ -109,9 +136,7 @@ export class NgvDataGrid implements  AfterContentChecked {
     if (this.option.toolbar && this.option.toolbar.filters) {
       for (let filter of this.option.toolbar.filters) {
         if (filter.value!==undefined){
-          if(filter.type=='radio'||filter.type=='checkbox'){
-            this.searchParams[filter.property] = filter.value;
-          }
+          this.searchParams[filter.property] = filter.value;
         }
         filter.dataSource.getData({}).then((data:Array<any>)=>{
           filter.dataArray = data;
@@ -132,6 +157,16 @@ export class NgvDataGrid implements  AfterContentChecked {
     }
   }
 
+
+  getBtnText = function(col: NgvDataGridOpBtnOption,item: any) {
+    if (typeof col.text === "function") {
+      return col.text(item);
+    } else {
+      return col.text;
+    }
+  }
+
+
   getToolbarBtnStyle = function(btn: NgvDataGridOpBtnOption) {
     if (btn.style) {
       if (typeof btn.style === "function") {
@@ -146,8 +181,12 @@ export class NgvDataGrid implements  AfterContentChecked {
 
   getColInnerHtml = function(item: any, col: NgvDataGridColumnOption){
     if (col.propertyPipe){
-      return col.propertyPipe.transform(item[col.property]);
-    }else{
+      if (typeof col.propertyPipe === "function") {
+        return col.propertyPipe(col.property, item);
+      }else{
+        return col.propertyPipe.transform(col.property, item);
+      }
+    } else {
       return item[col.property];
     }
   }
@@ -173,10 +212,50 @@ export class NgvDataGrid implements  AfterContentChecked {
   }
 
   search(){
-    debugger
-    this.option.dataSource.getData(this.searchParams).then((data: Array<any>) => {
-      this.data = data;
+    this.option.dataSource.getData(this.searchParams).then((model: NgvDsDataGridModel) => {
+      this.data = model.data;
+      // this.data = this.data.slice();
+      this.resetPage(model.page);
     });
+  }
+
+  goto(pageNum:number){
+     this.searchParams.pageIndex = pageNum;
+     this.search();
+  }
+
+  resetPage(page: NgvDsDataGridPageModel) {
+    this.page = page;
+    this.searchParams.pageIndex = page.pageIndex;
+    page.numArray = [];
+    let rightRepairCount = 0;
+    let leftRepairCount = 0;
+    for (let i = page.pageIndex - 2; i <= page.pageIndex + 2; i++) {
+      if (i > 0 && i <= page.pageCount) {
+        page.numArray.push(i);
+      }
+      if (i <= 0) {
+        if ((page.pageIndex + 2 + (rightRepairCount + 1) <= page.pageCount)) {
+          rightRepairCount++;
+        }
+      } else if (i > page.pageCount) {
+        if ((page.pageIndex - 2 - (leftRepairCount + 1))>=1) {
+          leftRepairCount++;
+        }
+      }
+    }
+    for (let i = 1; i <= rightRepairCount;i++){
+      page.numArray.push(page.numArray[page.numArray.length-1] + 1);
+    }
+    for (let i = 1; i <= leftRepairCount; i++) {
+      page.numArray.unshift(page.numArray[0] - 1);
+    }
+    if (page.numArray[0] == 1) {
+      page.firstDisable = true;
+    }
+    if (page.numArray[page.numArray.length - 1] == page.pageCount) {
+      page.endDisable = true;
+    }
   }
 
   ngAfterContentChecked() {

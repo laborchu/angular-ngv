@@ -37,30 +37,10 @@
             }
         }
     }
-    // .ngv-table {
-    //     width: 100%;
-    //     border-collapse: collapse;
-    //     thead {
-    //         font-size: 14px;
-    //         color: #999;
-    //         text-align: left;
-    //         font-weight: normal;
-    //         tr {
-    //             td {
-    //                 border-bottom: 1px solid #ddd;
-    //                 padding: 5px 10px 14px 10px;
-    //             }
-    //         }
-    //     }
-    //     tbody {
-    //         font-size: 14px;
-    //         color: #666;
-    //         tr {
-    //             td {
-    //                 border-bottom: 1px solid #ddd;
-    //                 padding: 10px;
-    //             }
-    //         }
-    //     }
-    // }
+    .pagination-nav{
+        text-align: center;
+        .pagination{
+            display: inline-flex;
+        }
+    }
 }

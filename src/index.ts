@@ -1,4 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { NgvDataGridModule } from './datagrid/datagrid.module';
 export {
@@ -6,21 +7,54 @@ export {
 	NgvDataGrid,
 	
 	NgvDataGridConfig, NgvDataGridOption, NgvDataGridTableOption,
-	NgvDataGridColumnOption, NgvDataGridOpOption, NgvDataGridOpBtnOption
+	NgvDataGridColumnOption, NgvDataGridOpOption, NgvDataGridOpBtnOption,
+	NgvDsDataGridModel, NgvDsDataGridPageModel
 } from './datagrid/datagrid.module';
 
+import { NgvPanelModule } from './panel/panel.module';
 export {
-	NgvDataSource
+	NgvPanelModule,
+	NgvPanel,
+
+	NgvPanelConfig, NgvPanelOption, NgvPanelCrumbsOption
+} from './panel/panel.module';
+
+import { NgvFormModule } from './form/form.module';
+export {
+	NgvFormModule,
+	NgvForm,
+
+	NgvFormConfig, NgvFormOption
+} from './form/form.module';
+
+
+export {
+	NgvDataSource, NgvDsModel
 } from './core/datasource';
 
 
+import {
+	NgvPipeModule
+} from './pipe/index';
+
+export {
+	NgvPipeModule, DatagridDeepPropertyPipe
+} from './pipe/index';
+
+
 const NGB_MODULES = [
-	NgvDataGridModule
+	NgvDataGridModule,
+	NgvPanelModule,
+	NgvFormModule
 ];
 
 @NgModule({
   imports: [
-	  NgvDataGridModule.forRoot()
+	  MDBBootstrapModule.forRoot(),
+	  NgvDataGridModule.forRoot(),
+	  NgvPanelModule.forRoot(),
+	  NgvFormModule.forRoot(),
+	  NgvPipeModule.forRoot()
   ],
   exports: NGB_MODULES
 })

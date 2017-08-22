@@ -1,27 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgvDataGridOption, NgvDataSource } from '../../../../../src/index';
+import { NgvDataGridOption, NgvDataSource,NgvDsModel, NgvDsDataGridModel } from '../../../../../src/index';
 import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from '../../shared/pipe/index';
 
+// pageSize: number; //每页个数
+// pageCount: number; //页面总数
+// pageIndex: number;//当前页数
+
 class DemoDataSource implements NgvDataSource {
-   getData(params: any): Promise<Array<any>> {
-      return new Promise<Array<any>>((resolve, reject) => {
-         resolve([
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
-            { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
-         ]);
+   getData(params: any): Promise<NgvDsDataGridModel> {
+      return new Promise<NgvDsDataGridModel>((resolve, reject) => {
+        let date = new Date();
+         resolve({
+            page:{
+              pageSize: 10,
+              pageCount: 10,
+              pageIndex: 10,
+            },
+            data: [
+                { username: date.toISOString(), name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 0, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
+                { username: "13999", name: "胡立波", mobile: "13333333333", authStatus: 1, compName: "浙江电商网络" },
+             ]
+         });
       });
    }
 }
 class AuthStatusDataSource implements NgvDataSource {
-   getData(params: any): Promise<Array<any>> {
-      return new Promise<Array<any>>((resolve, reject) => {
+   getData(params: any): Promise<NgvDsModel> {
+      return new Promise<NgvDsModel>((resolve, reject) => {
          resolve([
             { label: "全部", value: 0 },
             { label: "已认证", value: 1 },

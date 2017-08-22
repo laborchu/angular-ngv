@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
-  "version": "1.0.0",
-  "description": "Modular starter project for Angular 2 (and beyond) with statically typed build and AoT compilation",
+  "name": "angular-ngv",
+  "version": "0.0.1",
+  "description": "Angular Material Compontent",
   "repository": {
-    "url": "https://github.com/mgechev/angular-seed"
+    "url": "https://github.com/laborc/angular-ngv"
   },
   "scripts": {
     "build.dev": "gulp build.dev --color --env-config dev",

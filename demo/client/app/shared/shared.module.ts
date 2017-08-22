@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
-import { NgvModule } from 'angular-ngv';
+import { NgvModule } from '../../../../src/index';
+
 import { DatagridPropertyPipe, DatagridPropertyBadgePipe } from './pipe/index';
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
