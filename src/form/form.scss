@@ -37,5 +37,8 @@
       border-bottom-color: #ff4444 !important;
       box-shadow: 0 1px 0 0 #ff4444 !important;
     }
+    select,.form-datapicker-input,.edui-container{
+      border: 1px solid #ff4444;
+    }
   }
 }

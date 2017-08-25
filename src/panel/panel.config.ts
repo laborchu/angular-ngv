@@ -14,6 +14,8 @@ export type crumbsFunc = () => void;
 
 export class NgvPanelOption {
 	crumbs: Array<NgvPanelCrumbsOption>
+    buttons?: Array<NgvPanelBtnOption>;
+
 }
 
 export class NgvPanelCrumbsOption {
@@ -21,4 +23,9 @@ export class NgvPanelCrumbsOption {
 	action?: crumbsFunc;
 }
 
+export interface NgvPanelBtnOption {
+    text: string;
+    style?: string;
+    action: (data: any) => void;
+}
 

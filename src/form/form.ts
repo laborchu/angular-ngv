@@ -53,6 +53,10 @@ export class NgvForm implements AfterContentChecked {
         }
     }
 
+    checkVal():boolean{
+        return this.myForm.valid;
+    }
+
     getValue(): any {
         let value: any = {};
         for (let compOption of this.option.components) {
