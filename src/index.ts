@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgvDataGridModule } from './datagrid/datagrid.module';
 export {
@@ -23,8 +24,16 @@ import { NgvFormModule } from './form/form.module';
 export {
 	NgvFormModule,
 	NgvForm,
+	NgvFormInput,
+	NgvFormRadio,
+	NgvFormCheckbox,
+	NgvFormSelect,
+	NgvFormDatePicker,
+	NgvFormUmeditor,
 
-	NgvFormConfig, NgvFormOption
+	NgvFormConfig, NgvFormOption, NgvFormInputCompOption,
+	NgvFormRadioCompOption, NgvFormCheckboxCompOption, NgvFormSelectCompOption, 
+	NgvFormDatePickerCompOption,NgvFormUmeditorCompOption
 } from './form/form.module';
 
 
@@ -54,6 +63,7 @@ const NGB_MODULES = [
 	  NgvDataGridModule.forRoot(),
 	  NgvPanelModule.forRoot(),
 	  NgvFormModule.forRoot(),
+	  NgbModule.forRoot(),
 	  NgvPipeModule.forRoot()
   ],
   exports: NGB_MODULES

@@ -40,8 +40,8 @@ import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGr
               <div class="form-group toolbar-filter-value" *ngFor="let item of filter.dataArray">
                   <label>
                     <span class="filter-item-label">{{item.label}}</span>
-                    <input *ngIf="filter.type=='radio'" name="{{filter.property}}" type="radio" [(ngModel)]="searchParams[filter.property]" value="{{item.value}}">
-                    <input *ngIf="filter.type=='checkbox'" name="{{filter.property}}" (change)="filterCheckboxChange(filter.property,$event)" type="checkbox" value="{{item.value}}">
+                    <input *ngIf="filter.type=='radio'" name="{{filter.property}}" type="radio" [(ngModel)]="searchParams[filter.property]" [value]="item.value">
+                    <input *ngIf="filter.type=='checkbox'" name="{{filter.property}}" (change)="filterCheckboxChange(filter.property,$event)" type="checkbox" [value]="item.value">
                   </label>
               </div>
           </div>
@@ -75,11 +75,15 @@ import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGr
                 <span [ngClass]="getPropertyClass(item,col)" [innerHTML]="getColInnerHtml(item,col)"></span>
             </td>
             <td *ngIf="option.table.op" class="op-td">
-                <button *ngFor="let btn of option.table.op.buttons" (click)="btn.action(item,dataIndex)"
+                <button *ngFor="let btn of option.table.op.buttons" 
+                        [hidden]="btn.hidden?btn.hidden(item):false"
+                        (click)="btn.action(item,dataIndex)"
                         class="btn btn-sm {{getBtnStyle(btn,item)}}">
                         {{getBtnText(btn,item)}}
                 </button>
-                <div class="btn-group" *ngFor="let groupButton of option.table.op.groupButtons" dropdown>
+                <div class="btn-group"
+                     [hidden]="groupButton.hidden?groupButton.hidden(item):false"
+                     *ngFor="let groupButton of option.table.op.groupButtons" dropdown>
                     <button type="button" dropdownToggle
                             class="btn btn-sm dropdown-toggle {{getBtnStyle(groupButton,item)}}">
                         {{getBtnText(groupButton,item)}}
@@ -98,7 +102,7 @@ import { NgvDataGridConfig, NgvDataGridOption, NgvDataGridOpBtnOption, NgvDataGr
       <nav class="pagination-nav">
         <ul class="pagination pg-blue">
           <li class="page-item" [ngClass]="{disabled:page?.firstDisable}">
-            <a class="page-link" (click)="goto(num)" 
+            <a class="page-link" (click)="goto(1)" 
               href="javascript:void(0)" mdbRippleRadius>
               <span aria-hidden="true">&laquo;</span>
               <span class="sr-only">Previous</span>
@@ -184,7 +188,15 @@ export class NgvDataGrid implements  AfterContentChecked {
       if (typeof col.propertyPipe === "function") {
         return col.propertyPipe(col.property, item);
       }else{
-        return col.propertyPipe.transform(col.property, item);
+        if (Array.isArray(col.propertyPipe)){
+          let value: any;
+          for (let pipe of col.propertyPipe){
+            value = pipe.transform(col.property, item, value);
+          }
+          return value;
+        }else{
+          return col.propertyPipe.transform(col.property, item);
+        }
       }
     } else {
       return item[col.property];
@@ -193,7 +205,15 @@ export class NgvDataGrid implements  AfterContentChecked {
 
   getPropertyClass = function(item: any, col: NgvDataGridColumnOption) {
     if (col.propertyClassPipe) {
-      return col.propertyClassPipe.transform(item[col.property]);
+      if (Array.isArray(col.propertyClassPipe)) {
+        let value: any;
+        for (let pipe of col.propertyClassPipe) {
+          value = pipe.transform(col.property, item, value);
+        }
+        return value;
+      } else {
+        return col.propertyClassPipe.transform(col.property,item);
+      }
     } else {
       return "";
     }

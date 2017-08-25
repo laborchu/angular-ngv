@@ -1,2 +1,41 @@
 .ngv-form {
+  margin: 30px;
+  .form-radio {
+    .item-label {
+      margin-right: 5px;
+    }
+  }
+  .mb15 {
+    margin-bottom: 15px;
+  }
+  .form-control {
+    margin: 0;
+  }
+  .form-label {
+    width: 65px;
+  }
+
+  .form-datapicker {
+    .form-datapicker-btn {
+      height: 43.5px;
+      width: 43.5px;
+    }
+    .form-datapicker-input {
+      padding-left: 5px;
+    }
+  }
+  .umeditor-right {
+    width: 80%;
+  }
+  .has-error {
+    .error-msg {
+      font-size: 12px;
+      margin: 0;
+      color: #ff4444;
+    }
+    input[type=text] {
+      border-bottom-color: #ff4444 !important;
+      box-shadow: 0 1px 0 0 #ff4444 !important;
+    }
+  }
 }

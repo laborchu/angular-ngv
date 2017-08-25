@@ -43,7 +43,10 @@ export = (cb:any) => {
             '@angular/core': ngExternal('core'),
             '@angular/common': ngExternal('common'),
             '@angular/forms': ngExternal('forms'),
-            'angular-bootstrap-md': 'angular-bootstrap-md'
+            'angular-bootstrap-md': 'angular-bootstrap-md',
+            '@ng-bootstrap/ng-bootstrap': '@ng-bootstrap/ng-bootstrap',
+            'ngx-umeditor': 'ngx-umeditor',
+            'ng2-validation': 'ng2-validation'
           },
           rxjsExternal
         ]

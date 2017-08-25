@@ -43,11 +43,11 @@ export interface NgvDataGridTableOption {
 export interface NgvDataGridColumnOption {
 	text: string;
 	property: string;
-	propertyPipe?: PipeTransform | pipeFunc;
+	propertyPipe?: PipeTransform | pipeFunc | PipeTransform[];
 	width?: string;
 	title?:boolean;
 	overflow?: boolean;
-	propertyClassPipe?: PipeTransform;
+	propertyClassPipe?: PipeTransform | PipeTransform[];
 }
 
 export interface NgvDataGridOpOption {
@@ -59,12 +59,14 @@ export interface NgvDataGridOpOption {
 export interface NgvDataGridOpGroupBtnOption {
 	text: string;
 	buttons: Array<NgvDataGridOpBtnOption>;
+    hidden?: (data: any) => boolean;
 }
 
 export interface NgvDataGridOpBtnOption {
 	text: string | textFunc;
 	style?: string | styleFunc;
 	action: (data: any) => void;
+	hidden?: (data: any) => boolean;
 }
 
 export interface NgvDataGridToolbarOption {

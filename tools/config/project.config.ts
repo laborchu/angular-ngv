@@ -52,12 +52,22 @@ export class ProjectConfig extends SeedConfig {
     // Add packages (e.g. ng2-translate)
     let additionalPackages: ExtendPackages[] = [{
       name: 'angular-bootstrap-md',
-      // Path to the package's bundle
       path: 'node_modules/angular-bootstrap-md/bundles/angular-bootstrap-md.umd.js'
     },{
       name: 'angular-ngv',
-      // Path to the package's bundle
       path: 'node_modules/angular-ngv/bundles/angular-ngv.umd.js'
+    },{
+      name: '@ng-bootstrap/ng-bootstrap',
+      path: 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js'
+    },{
+      name: 'ngx-umeditor',
+      path: 'node_modules/ngx-umeditor/bundles/ngx-umeditor.umd.js'
+    },{
+      name: 'ng2-validation',
+      path: 'node_modules/ng2-validation/bundles/ng2-validation.umd.js'
+    },{
+      name: 'libphonenumber-js',
+      path: 'node_modules/libphonenumber-js/bundle/libphonenumber-js.min.js'
     }];
 
     //
