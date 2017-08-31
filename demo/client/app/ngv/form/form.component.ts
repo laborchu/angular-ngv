@@ -2,12 +2,21 @@ import {Component, OnInit,ViewChild} from '@angular/core';
 import {Validators, FormControl} from '@angular/forms';
 
 import {
+    NgvFormConfig,
     NgvFormOption, NgvFormInput, NgvFormRadio, NgvFormCheckbox, NgvFormSelect,
-    NgvFormDatePicker, NgvFormUmeditor,
+    NgvFormDatePicker, NgvFormUmeditor, NgvFormUploader,
     NgvPanelOption, NgvDataSource, NgvDsModel,NgvForm
 } from '../../../../../src/index';
 import {CustomValidators} from 'ng2-validation';
 
+
+class Md5DataSource implements NgvDataSource {
+    getData(params: any): Promise<NgvDsModel> {
+        return new Promise<NgvDsModel>((resolve, reject) => {
+            resolve({ filePath: "http://www.dianshang.com/img/ztzx/1.jpg?imageView2/1/w/310/h/207", fileType:"mp4" });
+        });
+    }
+}
 class SexDataSource implements NgvDataSource {
     getData(params: any): Promise<NgvDsModel> {
         return new Promise<NgvDsModel>((resolve, reject) => {
@@ -54,7 +63,15 @@ class SelectDataSource implements NgvDataSource {
 })
 export class FormComponent implements OnInit {
 
-    constructor() {
+    constructor(private config:NgvFormConfig) {
+        this.config.uploaderConfig = {
+            server: 'http://upload.qiniu.com/',
+            md5Source: new Md5DataSource(),
+            uploadBeforeSend : (block: any, data: any, headers: any) => {
+                data.token = "";
+                debugger
+            }
+        };
     }
     @ViewChild('myForm') myForm:NgvForm;
 
@@ -87,6 +104,14 @@ export class FormComponent implements OnInit {
                 ]
             },
             {
+                label: '上传头像',
+                property: "touxiang",
+                accept:"image",
+                multiple:false,
+                limit:1,
+                comp: NgvFormUploader
+            },
+            {
                 label: '地区',
                 property: "location",
                 comp: NgvFormSelect,
@@ -102,7 +127,11 @@ export class FormComponent implements OnInit {
             ]
             },
             {
-                label: '介绍', property: "desc", comp: NgvFormUmeditor, validations: [
+                label: '介绍', property: "desc", comp: NgvFormUmeditor, 
+                config: {
+                    imagePath: "http://www.baidu.com"
+                },
+                validations: [
                 {msg: "介绍必填", type: "required", fn: Validators.required},
             ]
             },

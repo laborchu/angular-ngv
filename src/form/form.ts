@@ -50,7 +50,11 @@ export class NgvForm implements AfterContentChecked {
             }else{
                 this.myForm.addControl(compOption.property,new FormControl(compOption.value));
             }
+            if(this.option.value){
+                compOption.value = this.option.value[compOption.property];
+            }
         }
+
     }
 
     checkVal():boolean{
@@ -58,11 +62,20 @@ export class NgvForm implements AfterContentChecked {
     }
 
     getValue(): any {
-        let value: any = {};
-        for (let compOption of this.option.components) {
-            value[compOption.property] = compOption.value;
+        if(!this.option.value){
+            this.option.value = {};
         }
-        return value;
+        for (let compOption of this.option.components) {
+            this.option.value[compOption.property] = compOption.value;
+        }
+        return this.option.value;
+    }
+
+    setValue(data:any){
+        this.option.value = data;
+        for (let compOption of this.option.components) {
+            compOption.value = this.option.value[compOption.property];
+        }
     }
 
     ngAfterContentChecked() {

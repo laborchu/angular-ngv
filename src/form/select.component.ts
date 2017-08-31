@@ -24,7 +24,7 @@ import { NgvDsModel } from '../core/datasource';
               <select class="form-control"
                       [formControl]="option.formGroup.controls[option.property]"
                       [(ngModel)]="option.value">
-                  <option *ngFor="let item of data" [value]="item.value">{{item.label}}</option>
+                  <option *ngFor="let item of data" [value]="item[option.dsValue]">{{item[option.dsLabel]}}</option>
               </select>
           </div>
       </div>
@@ -47,6 +47,12 @@ export class NgvFormSelect implements AfterContentChecked {
   data: Array<any>;
 
   ngOnInit() {
+    if(!this.option.dsLabel){
+        this.option.dsLabel = "label";
+    }
+    if(!this.option.dsValue){
+        this.option.dsValue = "value";
+    }
     this.option.dataSource.getData({}).then((data: Array<any>) => {
       this.data = data;
     })

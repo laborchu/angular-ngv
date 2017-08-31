@@ -68,6 +68,9 @@ export class ProjectConfig extends SeedConfig {
     },{
       name: 'libphonenumber-js',
       path: 'node_modules/libphonenumber-js/bundle/libphonenumber-js.min.js'
+    },{
+      name: 'ngx-webuploader',
+      path: 'node_modules/ngx-webuploader/bundles/ngx-webuploader.umd.js'
     }];
 
     //

@@ -30,10 +30,11 @@ export {
 	NgvFormSelect,
 	NgvFormDatePicker,
 	NgvFormUmeditor,
+	NgvFormUploader,
 
 	NgvFormConfig, NgvFormOption, NgvFormInputCompOption,
 	NgvFormRadioCompOption, NgvFormCheckboxCompOption, NgvFormSelectCompOption, 
-	NgvFormDatePickerCompOption,NgvFormUmeditorCompOption
+	NgvFormDatePickerCompOption,NgvFormUmeditorCompOption,NgvFormUploaderCompOption
 } from './form/form.module';
 
 

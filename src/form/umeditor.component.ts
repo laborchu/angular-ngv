@@ -80,9 +80,11 @@ export class NgvFormUmeditor implements AfterContentChecked {
                     if(!this.option.value){
                         formControl.setErrors({"required":true})
                     }else{
-                        delete formControl.errors["required"];
+                        if(formControl.errors){
+                            delete formControl.errors["required"];
+                        }
                     }
-                    if(Object.keys(formControl.errors).length==0){
+                    if(formControl.errors&&Object.keys(formControl.errors).length==0){
                         formControl.setErrors(null);
                     }
                 }

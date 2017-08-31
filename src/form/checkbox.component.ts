@@ -23,11 +23,11 @@ import {NgvDsModel} from '../core/datasource';
                 </div>
                 <div class="form-group" *ngFor="let item of data">
                     <label>
-                        <span class="item-label">{{item.label}}</span>
+                        <span class="item-label">{{item[option.dsLabel]}}</span>
                         <input name="{{option.property}}" type="checkbox"
                                [formControl]="option.formGroup.controls[option.property]"
-                               [checked]="checked(item.value)"
-                               (change)="change($event)" [value]="item.value">
+                               [checked]="checked(item[option.dsValue])"
+                               (change)="change($event)" [value]="item[option.dsValue]">
                     </label>
                 </div>
             </div>
@@ -50,9 +50,17 @@ export class NgvFormCheckbox implements AfterContentChecked {
     data: Array<any>;
 
     ngOnInit() {
+        if(!this.option.dsLabel){
+            this.option.dsLabel = "label";
+        }
+        if(!this.option.dsValue){
+            this.option.dsValue = "value";
+        }
+
         this.option.dataSource.getData({}).then((data: Array<any>) => {
             this.data = data;
         })
+       
     }
 
     change(event: any) {
