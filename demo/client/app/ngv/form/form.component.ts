@@ -4,8 +4,8 @@ import {Validators, FormControl} from '@angular/forms';
 import {
     NgvFormConfig,
     NgvFormOption, NgvFormInput, NgvFormRadio, NgvFormCheckbox, NgvFormSelect,
-    NgvFormDatePicker, NgvFormUmeditor, NgvFormUploader,
-    NgvPanelOption, NgvDataSource, NgvDsModel,NgvForm
+    NgvFormDatePicker, NgvFormUmeditor, NgvFormUploader, NgvFormCompOption,
+    NgvPanelOption, NgvDataSource, NgvDsModel, NgvForm, NgvFormComp
 } from '../../../../../src/index';
 import {CustomValidators} from 'ng2-validation';
 
@@ -87,10 +87,18 @@ export class FormComponent implements OnInit {
             },
             {label: '密码', property: "password", comp: NgvFormInput, type: "password"},
             {
-                label: '性别', property: "sex", comp: NgvFormRadio, dataSource: new SexDataSource(), validations: [
-                {msg: "性别必选", type: "required", fn: Validators.required}
-
-            ]
+                label: '性别', property: "sex", comp: NgvFormRadio, dataSource: new SexDataSource(), value:1,
+                onChange: (option: NgvFormCompOption) => {
+                    let txComp: NgvFormComp = this.myForm.getComp("touxiang").instance;
+                    if (option.value == 1) {
+                        txComp.isHidden = true;
+                    }else{
+                        txComp.isHidden = false;
+                    }
+                },
+                validations: [
+                    {msg: "性别必选", type: "required", fn: Validators.required}
+                ]
             },
             {
                 label: '爱好',
@@ -98,6 +106,8 @@ export class FormComponent implements OnInit {
                 comp: NgvFormCheckbox,
                 dataSource: new LikeDataSource(),
                 value: [1],
+                onChange: (option: any) => {
+                },
                 validations: [
                     {msg: "爱好必选", type: "required", fn: Validators.required}
 

@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UMeditorModule } from 'ngx-umeditor';
 import { CustomFormsModule } from 'ng2-validation'
 import { WebUploaderModule, WebUploaderConfig, Options, OptionsPick, OptionsThumb } from 'ngx-webuploader';
+import { NgvFormComp } from './form.component';
 
 import { NgvForm } from './form';
 import {
@@ -35,8 +36,9 @@ import {
 
 
 export { NgvForm } from './form';
+export { NgvFormComp } from './form.component';
 export {
-	NgvFormConfig, NgvFormOption, NgvFormInputCompOption, 
+	NgvFormConfig, NgvFormOption, NgvFormInputCompOption, NgvFormCompOption,
 	NgvFormRadioCompOption, NgvFormCheckboxCompOption, NgvFormSelectCompOption, NgvFormDatePickerCompOption,
 	NgvFormUmeditorCompOption,NgvFormUploaderCompOption
 } from './form.config';

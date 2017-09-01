@@ -24,6 +24,7 @@ import { NgvFormModule } from './form/form.module';
 export {
 	NgvFormModule,
 	NgvForm,
+	NgvFormComp,
 	NgvFormInput,
 	NgvFormRadio,
 	NgvFormCheckbox,
@@ -32,7 +33,7 @@ export {
 	NgvFormUmeditor,
 	NgvFormUploader,
 
-	NgvFormConfig, NgvFormOption, NgvFormInputCompOption,
+	NgvFormConfig, NgvFormOption, NgvFormInputCompOption, NgvFormCompOption,
 	NgvFormRadioCompOption, NgvFormCheckboxCompOption, NgvFormSelectCompOption, 
 	NgvFormDatePickerCompOption,NgvFormUmeditorCompOption,NgvFormUploaderCompOption
 } from './form/form.module';

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgvFormConfig, NgvFormSelectCompOption } from './form.config';
 import { NgvDsModel } from '../core/datasource';
+import { NgvFormComp } from './form.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -23,6 +24,7 @@ import { NgvDsModel } from '../core/datasource';
           <div class="form-group">
               <select class="form-control"
                       [formControl]="option.formGroup.controls[option.property]"
+                      (change)="onChange()"
                       [(ngModel)]="option.value">
                   <option *ngFor="let item of data" [value]="item[option.dsValue]">{{item[option.dsLabel]}}</option>
               </select>
@@ -38,9 +40,9 @@ import { NgvDsModel } from '../core/datasource';
   </div>
   `
 })
-export class NgvFormSelect implements AfterContentChecked {
+export class NgvFormSelect extends NgvFormComp implements AfterContentChecked {
   constructor() {
-
+    super();
   }
 
   option: NgvFormSelectCompOption;
@@ -56,6 +58,10 @@ export class NgvFormSelect implements AfterContentChecked {
     this.option.dataSource.getData({}).then((data: Array<any>) => {
       this.data = data;
     })
+  }
+
+  onChange(){
+    this.option.onChange && this.option.onChange(this.option);
   }
 
   ngAfterContentChecked() {

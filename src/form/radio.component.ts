@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgvFormConfig, NgvFormRadioCompOption } from './form.config';
 import { NgvDsModel } from '../core/datasource';
+import { NgvFormComp } from './form.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -24,6 +25,7 @@ import { NgvDsModel } from '../core/datasource';
                 <label>
                     <span class="item-label">{{item[option.dsLabel]}}</span>
                     <input name="{{option.property}}" type="radio" [(ngModel)]="option.value"
+                            (change)="onChange()"
                            [formControl]="option.formGroup.controls[option.property]"
                            [value]="item[option.dsValue]">
                 </label>
@@ -39,9 +41,9 @@ import { NgvDsModel } from '../core/datasource';
     </div>
   `
 })
-export class NgvFormRadio implements AfterContentChecked {
+export class NgvFormRadio extends NgvFormComp implements AfterContentChecked {
   constructor() {
-
+    super();
   }
 
   option: NgvFormRadioCompOption;
@@ -56,7 +58,12 @@ export class NgvFormRadio implements AfterContentChecked {
     }
     this.option.dataSource.getData({}).then((data: Array<any>) => {
       this.data = data;
-    })
+    });
+    this.onChange();
+  }
+
+  onChange(){
+    this.option.onChange&&this.option.onChange(this.option);
   }
 
   ngAfterContentChecked() {

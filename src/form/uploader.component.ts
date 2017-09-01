@@ -6,10 +6,11 @@ import {
     ComponentFactoryResolver,
     Input
 } from '@angular/core';
-import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { Response, Headers, RequestOptions } from '@angular/http';
 import {UMeditorComponent} from 'ngx-umeditor';
 import {NgvFormConfig, NgvFormUploaderCompOption} from './form.config';
 import { WebUploaderComponent, File, FileStatus, Options } from 'ngx-webuploader';
+import { NgvFormComp } from './form.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -52,9 +53,9 @@ import { WebUploaderComponent, File, FileStatus, Options } from 'ngx-webuploader
         </div>
     `
 })
-export class NgvFormUploader implements AfterContentChecked {
-    constructor(protected http: Http, private formConfig:NgvFormConfig) {
-
+export class NgvFormUploader extends NgvFormComp implements AfterContentChecked {
+    constructor(private formConfig:NgvFormConfig) {
+        super();
     }
 
     option: NgvFormUploaderCompOption;
@@ -125,6 +126,7 @@ export class NgvFormUploader implements AfterContentChecked {
             })
             .on('uploadSuccess', (file: File, data: any) => {
                 this.wrapperData(data, file);
+                this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.uploadSuccess && this.formConfig.uploaderConfig.uploadSuccess(data);
                 this.option.value.push(data);
             })
             .on('uploadError', (file: File, err: any) => {
@@ -141,6 +143,7 @@ export class NgvFormUploader implements AfterContentChecked {
             data.fileType = "";
         }
         data.fileSize = file.size;
+        data.md5 = file["md5"];
         this.formConfig.uploaderConfig && this.formConfig.uploaderConfig.wrapperUploadData && this.formConfig.uploaderConfig.wrapperUploadData(data);
     }
 

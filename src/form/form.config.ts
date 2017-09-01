@@ -4,6 +4,7 @@ import { NgvDataSource, NgvDsModel } from '../core/datasource';
 
 
 export type wrapperUploadDataFunc = (data: any) => void;
+export type uploadSuccessFunc = (data: any) => void;
 export type uploadBeforeSendFunc = (block: any, data: any, headers: any) => void;
 
 /**
@@ -21,6 +22,7 @@ export class NgvFormUploaderConfig {
 	md5Source?: NgvDataSource;
 	wrapperUploadData ?: wrapperUploadDataFunc;
 	uploadBeforeSend?: uploadBeforeSendFunc;//错误处理
+	uploadSuccess?: uploadSuccessFunc;//上传完成
 }
 
 export class NgvFormOption {
@@ -29,6 +31,8 @@ export class NgvFormOption {
 }
 
 
+export type onChangeFunc = (option:NgvFormCompOption) => void;
+
 export class NgvFormCompOption {
 	comp: any;
 	label: string;
@@ -36,6 +40,7 @@ export class NgvFormCompOption {
 	value?: any;
     validations?:Array<NgvFormValidationOption>;
     formGroup?: FormGroup;
+    onChange?: onChangeFunc;
 }
 
 export class NgvFormValidationOption {

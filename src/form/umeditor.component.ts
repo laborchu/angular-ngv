@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {UMeditorComponent} from 'ngx-umeditor';
 import {NgvFormConfig, NgvFormUmeditorCompOption} from './form.config';
+import { NgvFormComp } from './form.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -40,9 +41,9 @@ import {NgvFormConfig, NgvFormUmeditorCompOption} from './form.config';
         </div>
     `
 })
-export class NgvFormUmeditor implements AfterContentChecked {
+export class NgvFormUmeditor extends NgvFormComp implements AfterContentChecked {
     constructor() {
-
+        super();
     }
 
     @ViewChild('editor') editor: UMeditorComponent;

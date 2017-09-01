@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {NgvFormConfig, NgvFormCheckboxCompOption} from './form.config';
 import {NgvDsModel} from '../core/datasource';
+import {NgvFormComp} from './form.component';
 
 
 /**
@@ -41,9 +42,9 @@ import {NgvDsModel} from '../core/datasource';
         </div>
     `
 })
-export class NgvFormCheckbox implements AfterContentChecked {
+export class NgvFormCheckbox extends NgvFormComp implements AfterContentChecked {
     constructor() {
-
+        super();
     }
 
     option: NgvFormCheckboxCompOption;
@@ -56,11 +57,9 @@ export class NgvFormCheckbox implements AfterContentChecked {
         if(!this.option.dsValue){
             this.option.dsValue = "value";
         }
-
         this.option.dataSource.getData({}).then((data: Array<any>) => {
             this.data = data;
         })
-       
     }
 
     change(event: any) {
@@ -83,6 +82,7 @@ export class NgvFormCheckbox implements AfterContentChecked {
                 }
             }
         }
+        this.option.onChange && this.option.onChange(this.option);
     }
 
     checked(value: any): boolean {

@@ -33,7 +33,7 @@ export class NgvForm implements AfterContentChecked {
     @ViewChild("formRef", {read: ViewContainerRef}) formRef: ViewContainerRef;
     @Input() option: NgvFormOption;
     myForm: FormGroup;
-
+    compMap: any = {};
     ngOnInit() {
         this.myForm = this.fb.group({});
         for (let compOption of this.option.components) {
@@ -41,6 +41,7 @@ export class NgvForm implements AfterContentChecked {
             let comp: ComponentRef<any> = this.formRef.createComponent(compFactory);
             compOption.formGroup = this.myForm;
             comp.instance.option = compOption;
+            this.compMap[compOption.property] = comp;
             if(compOption.validations){
                 let fnArray = [];
                 for(let validation of compOption.validations){
@@ -76,6 +77,10 @@ export class NgvForm implements AfterContentChecked {
         for (let compOption of this.option.components) {
             compOption.value = this.option.value[compOption.property];
         }
+    }
+
+    getComp(property:string){
+        return this.compMap[property];
     }
 
     ngAfterContentChecked() {

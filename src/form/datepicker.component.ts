@@ -10,6 +10,7 @@ import {
 import {NgvFormConfig, NgvFormDatePickerCompOption} from './form.config';
 import {NgvDsModel} from '../core/datasource';
 import {NgbDatepickerI18n} from '@ng-bootstrap/ng-bootstrap';
+import { NgvFormComp } from './form.component';
 
 const I18N_VALUES = {
     weekdays: ['一', '二', '三', '四', '五', '六', '日'],
@@ -70,9 +71,9 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
     providers: [{provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}] // define custom NgbDatepickerI18n provider
 
 })
-export class NgvFormDatePicker implements AfterContentChecked {
+export class NgvFormDatePicker extends NgvFormComp implements AfterContentChecked {
     constructor() {
-
+        super();
     }
 
     option: NgvFormDatePickerCompOption;

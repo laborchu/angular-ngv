@@ -7,6 +7,7 @@ import {
   Input
 } from '@angular/core';
 import { NgvFormConfig, NgvFormCompOption } from './form.config';
+import { NgvFormComp } from './form.component';
 
 /**
  * A component that makes it easy to create tabbed interface.
@@ -19,6 +20,7 @@ import { NgvFormConfig, NgvFormCompOption } from './form.config';
                type="{{option.type}}" 
                class="form-control"
                [formControl]="option.formGroup.controls[option.property]"
+               (change)="onChange()"
                [(ngModel)]="option.value">
         <label>{{option.label}}</label>
         
@@ -29,12 +31,16 @@ import { NgvFormConfig, NgvFormCompOption } from './form.config';
     </div>
   `
 })
-export class NgvFormInput implements AfterContentChecked {
+export class NgvFormInput extends NgvFormComp implements AfterContentChecked {
   constructor() {
-
+    super();
   }
 
   option: NgvFormCompOption;
+
+  onChange(){
+    this.option.onChange && this.option.onChange(this.option);
+  }
 
   ngOnInit() {
   }
