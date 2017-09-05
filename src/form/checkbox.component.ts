@@ -66,16 +66,18 @@ export class NgvFormCheckbox extends NgvFormComp implements AfterContentChecked 
         if (!this.option.value) {
             this.option.value = [];
         }
-        let data = this.option.value;
-        if (event.currentTarget.checked) {
-            data.push(event.currentTarget.value);
-        } else {
-            data.splice(data.indexOf(event.currentTarget.value), 1);
+        if (event){
+            let data = this.option.value;
+            if (event.currentTarget.checked) {
+                data.push(event.currentTarget.value);
+            } else {
+                data.splice(data.indexOf(event.currentTarget.value), 1);
+            }
         }
         if(this.option.validations){
             for(let val of this.option.validations){
                 if(val.type=="required"){
-                    if(data.length==0){
+                    if (this.option.value.length == 0) {
                         let formControl = this.option.formGroup.controls[this.option.property];
                         formControl.setErrors({"required":true})
                     }

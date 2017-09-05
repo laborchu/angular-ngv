@@ -76,6 +76,10 @@ export class NgvForm implements AfterContentChecked {
         this.option.value = data;
         for (let compOption of this.option.components) {
             compOption.value = this.option.value[compOption.property];
+            let txComp: any = this.compMap[compOption.property].instance;
+            if (txComp.onChange){
+                txComp.onChange();
+            }
         }
     }
 

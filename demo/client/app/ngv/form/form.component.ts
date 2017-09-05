@@ -89,12 +89,12 @@ export class FormComponent implements OnInit {
             {
                 label: '性别', property: "sex", comp: NgvFormRadio, dataSource: new SexDataSource(), value:1,
                 onChange: (option: NgvFormCompOption) => {
-                    let txComp: NgvFormComp = this.myForm.getComp("touxiang").instance;
-                    if (option.value == 1) {
-                        txComp.isHidden = true;
-                    }else{
-                        txComp.isHidden = false;
-                    }
+                    // let txComp: NgvFormComp = this.myForm.getComp("touxiang").instance;
+                    // if (option.value == 1) {
+                    //     txComp.isHidden = true;
+                    // }else{
+                    //     txComp.isHidden = false;
+                    // }
                 },
                 validations: [
                     {msg: "性别必选", type: "required", fn: Validators.required}
@@ -119,6 +119,7 @@ export class FormComponent implements OnInit {
                 accept:"image",
                 multiple:false,
                 limit:1,
+                uploaderId: new Date().getTime() + "";
                 comp: NgvFormUploader
             },
             {

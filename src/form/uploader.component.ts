@@ -1,6 +1,6 @@
 import {
     Component,
-    AfterContentChecked,
+    OnInit,
     ViewContainerRef,
     ViewChild,
     ComponentFactoryResolver,
@@ -40,7 +40,8 @@ import { NgvFormComp } from './form.component';
                     </div>
                     <a id="{{getUploaderId()}}" [hidden]="option.limit>0&&option.limit<=option.value.length">+</a>
                 </div>
-                 <webuploader style="display: none;" [options]="ngxOptions" (onReady)="onReady($event)">
+                 <webuploader *ngIf="ngxOptions" [options]="ngxOptions" 
+                 (onReady)="onReady($event)">
                 </webuploader>
             </div>
             <div class="form-inline" [hidden]="!option.formGroup.controls[option.property].errors">
@@ -53,7 +54,7 @@ import { NgvFormComp } from './form.component';
         </div>
     `
 })
-export class NgvFormUploader extends NgvFormComp implements AfterContentChecked {
+export class NgvFormUploader extends NgvFormComp implements OnInit {
     constructor(private formConfig:NgvFormConfig) {
         super();
     }
@@ -68,13 +69,17 @@ export class NgvFormUploader extends NgvFormComp implements AfterContentChecked 
         if(!this.option.value){
             this.option.value = [];
         }
-        this.ngxOptions = {
-            pick: { 
-                id: "#" + this.getUploaderId(),
-                multiple: this.option.multiple
-            },
-            accept:this.getAccept()
-        }
+
+        setTimeout(()=>{
+            this.ngxOptions = {
+                pick: { 
+                    id: "#" + this.getUploaderId(),
+                    multiple: this.option.multiple
+                },
+                accept:this.getAccept()
+            }
+        },100);
+        
     }
 
     getUploaderId():string{
@@ -97,7 +102,6 @@ export class NgvFormUploader extends NgvFormComp implements AfterContentChecked 
         }
         return null;
     }
-
     onReady(uploader: WebUploaderComponent) {
         uploader.Instance.options.server = this.formConfig.uploaderConfig.server;
         uploader.Instance
@@ -135,7 +139,7 @@ export class NgvFormUploader extends NgvFormComp implements AfterContentChecked 
             });
     }
 
-    wrapperData(data: any, file: File){
+    wrapperData(data: any, file: any){
         data.fileName = file.name;
         if (file.ext) {
             data.fileType = file.ext.toLowerCase();
